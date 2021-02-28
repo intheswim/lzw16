@@ -1,3 +1,4 @@
+/* Copyright (c) 1996-2021 Yuriy Yakimenko        */
 /* This code is based on Mark Nelson's 1995 book. */
 
 /**************************************************/
