@@ -68,6 +68,8 @@ by Decompress.
 
 4. Add functions taking binary buffers as opposed to filenames. 
 
+////////////////////////////////////////////////////////////////////////////////
+
 The code  can be relatively easily  converted to support  16-bit and even larger
 maximum width bit  encoding. For this, some variables in  Compress  must be made
 32-bit, and Decompress' NOT_CODE  value must  be more  than 16-bits, along  with
@@ -79,8 +81,8 @@ most practical purposes it's not really worth doing.
 
 Original versions  written in 1996 had maximum codes of 12-13 bits also in  part
 due  to memory  constraints  of DOS  and eary Windows; 15-bit maximum on  modern
-computers gives more that adequate compresion for LZW while  taking advantage of
-vastly larger available memory. 
+computers gives more than adequate compresion for LZW while  taking advantage of
+much larger available memory. 
 
 
 </pre> 
