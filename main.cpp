@@ -90,7 +90,7 @@ static void printSyntax ()
   printf ("\t -f - force overwrite; applicable with -u option only \n");
   printf ("\t -k - keep dirty/incomplete output file on failure \n");
   printf ("\t -t - test option; requires only inputFile \n");
-  printf ("\t -bN - set maximum code bits. N from 12 to 15. Default is %d.\n", DEFAULT_MAX_BITS);
+  printf ("\t -bN - set maximum code bits. N from 12 to %d. Default is %d.\n", SUPPORTED_MAX_BITS, DEFAULT_MAX_BITS);
   printf ("\t -large - synthetic data test; N is size in 256 Kb units. Default N is 32.\n");
 }
 
@@ -136,6 +136,7 @@ static enum ArgOption parseArguments (int argc, char *argv[], progArguments & pa
               else if (strcmp (argv[i], "-b13") == 0) bits = 13;
               else if (strcmp (argv[i], "-b14") == 0) bits = 14;
               else if (strcmp (argv[i], "-b15") == 0) bits = 15;
+              else if (strcmp (argv[i], "-b16") == 0) bits = 16;
               else 
               {
                 fprintf (stderr, "Invalid number of bits. Allowed range 12 to 15.\n");    

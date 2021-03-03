@@ -4,7 +4,7 @@
 
 This is classic implementation of LZW  algorithm based on  Mark Nelson's book on
 data  compression  from 1995.  It  uses  variable-width  dictionary codes up  to
-15-bit. 
+16-bit. 
 
 Original development was done in 1996-97. 
 
@@ -71,7 +71,7 @@ by Decompress.
 
 ////////////////////////////////////////////////////////////////////////////////
 
-The  code  can be relatively easily converted to support 16-bit  and even larger
+The  code  can be relatively easily converted to support 17-bit  and even larger
 maximum  width bit encoding. For this,  some  variables in Compress must be made
 32-bit, and Decompress'  NOT_CODE value must be  more  than 16-bits, along  with
 stack/suffx/prefix arrays. 

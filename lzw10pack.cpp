@@ -4,7 +4,7 @@
 /**************************************************/
 /*  LZW compression program with full dictionary  */
 /*  reset when filled up. Variable width  codes   */ 
-/*  up to 15 bits in output.                      */   
+/*  up to 16 bits in output.                      */   
 /**************************************************/
 
 #include "common.h"
@@ -100,7 +100,7 @@ class LZWPacker
 
   bool setupConsts (int bits)
   {
-      if (bits < 8 || bits > 15) 
+      if (bits < 9 || bits > SUPPORTED_MAX_BITS) 
         return false;
 
       MAX_BITS = bits;
@@ -307,7 +307,7 @@ class LZWPacker
 #endif     
   }
 
-  int16_t ExistHashTable (const uint32_t Key) const 
+  int32_t ExistHashTable (const uint32_t Key) const 
   {
 #ifdef USE_STL_HASH
     auto it = table.find (Key);
@@ -342,7 +342,7 @@ class LZWPacker
   {
     unsigned char *buffer;
     uint16_t CurCode; 
-    int16_t NewCode; // must be signed
+    int32_t NewCode; // must be signed
     int32_t NewKey;
     int len, i;
     const char label[4] = "LZW";

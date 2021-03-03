@@ -4,7 +4,7 @@
 /**************************************************/
 /*  LZW decompression program with full           */
 /*  dictionary reset when filled up. Variable     */
-/*  width codes up to 15 bits in output.          */   
+/*  width codes up to 16 bits in output.          */   
 /**************************************************/
 
 #include "common.h"
@@ -32,9 +32,9 @@ class LZWUnpacker
     uint32_t MAX_BITS ;
     uint32_t HT_SIZE, HT_KEY_MASK, HT_CLEAR_CODE, HT_MAX_CODE; 
 
-    static const int CLEAR_BYTE = 0x80;
+    static const int CLEAR_BYTE = 0xFF;
+    static const int NOT_CODE = 0xFFFF;
 
-    static const int NOT_CODE = ((CLEAR_BYTE << 8) | CLEAR_BYTE); // 0x1010
     static const int INITIAL_BUFFER = 0x8000;
 
     mutable std::mutex _mtx;
@@ -71,7 +71,7 @@ class LZWUnpacker
 
   bool setupConsts (int bits)
   {
-      if (bits < 8 || bits > 15) 
+      if (bits < 9 || bits > SUPPORTED_MAX_BITS) 
         return false;
 
       MAX_BITS = bits;
@@ -125,8 +125,8 @@ class LZWUnpacker
     int16_t i = 0;
     uint32_t len = 0;
     uint16_t RunCode = 256;
-    uint16_t OldCode = NOT_CODE, CurPrefix;
-    uint16_t code;
+    uint32_t OldCode = NOT_CODE, CurPrefix;
+    uint32_t code;
     uint32_t buffer_size = INITIAL_BUFFER;
     char label[4] = { 0 };
     uint8_t version = 255;

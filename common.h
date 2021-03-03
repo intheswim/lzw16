@@ -11,6 +11,8 @@
 #define BUFFLEN         16384    /* the larger, the better for compression. This value must be the same for coder and decoder. */
 
 #define DEFAULT_MAX_BITS    15
+#define SUPPORTED_MAX_BITS  16
+
 
 long fileSize (const char *filename);
 bool is_big_endian(void);
