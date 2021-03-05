@@ -74,7 +74,7 @@ by Decompress.
 The  code  can be relatively easily converted to support 17-bit  and even larger
 maximum  width bit encoding. For this,  some  variables in Compress must be made
 32-bit, and Decompress'  NOT_CODE value must be  more  than 16-bits, along  with
-stack/suffx/prefix arrays. 
+stack/suffix/prefix arrays. 
 
 At the same time, as maximum code width grows, we hit  the "law  of  diminishing
 returns" on data compression while also increasing  memory  requirements, so for

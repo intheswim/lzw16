@@ -255,7 +255,7 @@ class LZWUnpacker
     {
       unsigned char byte1 = 0, byte2 = 0;
       int rb = 0;
-      rb += fread (&byte1, 1, 1, fp);
+      rb += (int)fread (&byte1, 1, 1, fp);
 
       if (1 != rb)
       {

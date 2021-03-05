@@ -430,7 +430,7 @@ class LZWPacker
 
     while (compress_ok)
     {
-      len = fread(buffer, 1, BUFFLEN, fp);
+      len = (int)fread(buffer, 1, BUFFLEN, fp);
       if (len == 0)
         break;
 

@@ -4,14 +4,14 @@
 #include <cstring>
 #include <cstdlib>
 #include <stdint.h>
+#include <errno.h>
 
 #if defined(__linux__)
     /* Linux  */
 #include <unistd.h> /* access */
-#elif defined (_WIN32)
+#elif defined (_MSC_VER)
 #include <io.h>
 #endif
-
 
 long fileSize (const char *filename)
 {
@@ -66,3 +66,32 @@ char *str_dup (const char *s) /* strdup replacement. */
   strcpy (ret, s);
   return ret;
 }
+
+#ifndef _MSC_VER // MS compatibility adapters for "secure" functions.
+
+int tmpnam_s(char* temp_name, size_t sizeInChars)
+{
+    char buffer [PATH_MAX] ;
+
+    if (NULL == tmpnam(buffer))
+        return -1; 
+
+  /*  if (strlen (mktemp (buffer)) == 0)
+        return errno;  */
+
+    if (strlen (buffer) >= sizeInChars)
+    {
+        return ERANGE;
+    }
+
+    if (temp_name == NULL)
+    {
+        return EINVAL;
+    }
+
+    strcpy (temp_name, buffer);
+
+    return 0;
+}
+
+#endif // _MSC_VER

@@ -1,4 +1,4 @@
-/* LZW variable width up to 15-bit data compression implementation. 
+/* LZW variable width up to 16-bit data compression implementation. 
  * Copyright (c) 1996-2021 Yuriy Yakimenko
  *
  * Permission to use, copy, modify, distribute, and sell this software and its
@@ -139,7 +139,7 @@ static enum ArgOption parseArguments (int argc, char *argv[], progArguments & pa
               else if (strcmp (argv[i], "-b16") == 0) bits = 16;
               else 
               {
-                fprintf (stderr, "Invalid number of bits. Allowed range 12 to 15.\n");    
+                fprintf (stderr, "Invalid number of bits. Allowed range 12 to %d.\n", SUPPORTED_MAX_BITS);    
                 return PARSE_ERROR;
               }
 
@@ -362,12 +362,11 @@ static int syntheticDataTest (int kilobytes256, int bits = DEFAULT_MAX_BITS, Byt
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef LIBTEST_MAIN  // add LIBTEST #define to compile the test with static library
+
 int main(int argc, char *argv[])
 {
   progArguments params;
-
-  const char temp_name [] = "lzw10_temp.lzw";
-  const char out_name [] = "lzw10_out.bin";
 
   enum ArgOption option = parseArguments (argc, argv, params);
 
@@ -411,6 +410,10 @@ int main(int argc, char *argv[])
   }
   else if (option == FLAG_TEST)
   {
+    char temp_name [PATH_MAX], out_name [PATH_MAX];
+
+    tmpnam_s (temp_name, sizeof(temp_name));
+
     if (0 == Compress2 (params.inputFile, temp_name, params.flags, params.bits ))
     {
       printf ("Compression failed.\n");
@@ -420,6 +423,8 @@ int main(int argc, char *argv[])
     {
       printf ("Compression successful.\n");
     }
+
+    tmpnam_s (out_name, sizeof(out_name));
 
     if (0 == Decompress(temp_name, out_name, params.flags | OVERWRITE_FLAG))
     {
@@ -439,3 +444,5 @@ int main(int argc, char *argv[])
   
   return EXIT_SUCCESS;
 }
+
+#endif // LIBTEST_MAIN

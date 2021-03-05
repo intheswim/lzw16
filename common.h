@@ -3,6 +3,13 @@
 #include "export.h"
 
 #ifdef _MSC_VER
+#define PATH_MAX 260
+#else 
+#include <linux/limits.h>   // PATH_MAX
+#include <stddef.h>         // size_t
+#endif 
+
+#ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
@@ -19,3 +26,7 @@ bool is_big_endian(void);
 void cleanup (const char *outfile, int flags);
 bool file_exists (const char *filename);
 char *str_dup (const char *s);
+
+#ifndef _MSC_VER
+int tmpnam_s(char* temp_name, size_t sizeInChars);
+#endif 
