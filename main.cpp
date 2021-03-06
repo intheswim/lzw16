@@ -440,6 +440,9 @@ int main(int argc, char *argv[])
 
     run_cksum (params.inputFile);
     run_cksum (out_name);
+
+    remove (temp_name);
+    remove (out_name);
   }
   
   return EXIT_SUCCESS;
