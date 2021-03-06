@@ -13,6 +13,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
+#include <cassert>
 #include "export.h"
 
 #include <chrono>
@@ -20,19 +21,44 @@
 
 #include "common.h"
 
+#if defined(__linux__)
+#define LIBTEST_MAIN
+#endif 
+
 #ifdef LIBTEST_MAIN  // add LIBTEST #define to compile the test with static library
 
 int main (int argc, char *argv[])
 {
-    const char presetInput[] = "sample.txt";
+    int bits = DEFAULT_MAX_BITS;
+    bool bits_set = false;
 
-    const char *inputFile = presetInput;
+    char inputFile [PATH_MAX] = { 0 };
 
-    char compressedFile [PATH_MAX], outputFile [PATH_MAX];
+    char compressedFile [PATH_MAX] = { 0 };
 
-    if (argc == 2)
+    char outputFile [PATH_MAX] = { 0 };
+
+    if (2 == argc)
     {
-        inputFile = argv[1];
+        strcpy_s (inputFile, PATH_MAX, argv[1]);
+    } 
+    else if (3 == argc)
+    {
+        if (0 == strncmp (argv[1], "-b", 2))
+        {
+            char *ptr = argv[1];
+            bits = atoi (ptr + 2);
+
+            bits_set = true;
+
+            strcpy_s(inputFile, PATH_MAX, argv[2]);
+        }
+    }
+
+    if (strlen (inputFile) == 0 || (bits < 9 || bits > SUPPORTED_MAX_BITS))
+    {
+        printf ("Usage: %s [-b{12-16}] fileToCompress\n", argv[0]);
+        return EXIT_FAILURE;
     }
 
     printf ("Testing compression on: %s\n", inputFile);
@@ -41,13 +67,20 @@ int main (int argc, char *argv[])
 
     tmpnam_s (outputFile, sizeof(outputFile));
 
+    assert (strlen(compressedFile) > 0 && strlen (outputFile) > 0);
+
     std::chrono::high_resolution_clock::time_point start;
 
     start = std::chrono::high_resolution_clock::now();
 
-    int ret = Compress (inputFile, compressedFile, VERBOSE_OUTPUT);
+    int ret = 0;
 
-    printf ("Compression : %s.\n", ret ? "Successful" : "Failed");
+    if (!bits_set)
+        ret = Compress (inputFile, compressedFile, VERBOSE_OUTPUT);
+    else 
+        ret = Compress2 (inputFile, compressedFile, VERBOSE_OUTPUT, bits);
+
+    printf ("Compression %s.\n", ret ? "successful" : "failed");
 
     if (!ret)
         return EXIT_FAILURE;
@@ -61,7 +94,7 @@ int main (int argc, char *argv[])
 
     ret = Decompress (compressedFile, outputFile, VERBOSE_OUTPUT);
 
-    printf ("Decompression : %s.\n", ret ? "Successful" : "Failed");
+    printf ("Decompression %s.\n", ret ? "successful" : "failed");
 
     if (!ret)
         return EXIT_FAILURE;

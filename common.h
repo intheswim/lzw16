@@ -29,4 +29,5 @@ char *str_dup (const char *s);
 
 #ifndef _MSC_VER
 int tmpnam_s(char* temp_name, size_t sizeInChars);
+int strcpy_s(char *dest, size_t dest_len, const char *src);
 #endif 

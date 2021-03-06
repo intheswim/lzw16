@@ -76,9 +76,6 @@ int tmpnam_s(char* temp_name, size_t sizeInChars)
     if (NULL == tmpnam(buffer))
         return -1; 
 
-  /*  if (strlen (mktemp (buffer)) == 0)
-        return errno;  */
-
     if (strlen (buffer) >= sizeInChars)
     {
         return ERANGE;
@@ -90,6 +87,19 @@ int tmpnam_s(char* temp_name, size_t sizeInChars)
     }
 
     strcpy (temp_name, buffer);
+
+    return 0;
+}
+
+int strcpy_s(char *dest, size_t dest_len, const char *src)
+{
+     if (!src || !dest)
+        return EINVAL;
+
+    if (strlen (src) >= dest_len)
+        return ERANGE;
+
+    strcpy (dest, src);
 
     return 0;
 }

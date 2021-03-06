@@ -21,7 +21,7 @@ makelib: lzw10pack.o lzw10unpack.o common.o
 		ar rcs liblzw10.a lzw10pack.o lzw10unpack.o common.o
 
 libtest : libtest.cpp
-		$(CC) $(CFLAGS) -DLIBTEST_MAIN -o lzw_test libtest.cpp $(CLIBS) -L. -llzw10
+		$(CC) $(CFLAGS) -o lzw_test libtest.cpp $(CLIBS) -L. -llzw10
 
 .PHONY: clean
 
