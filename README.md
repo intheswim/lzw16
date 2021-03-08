@@ -20,26 +20,26 @@ The program has been tested  on Ubuntu 18.04 (with gcc and clang) and on Windows
 
 <pre> 
 
-Running  make produces (1) executable `lzw10`; (2) static  library  `liblzw10.a`
+Running  make produces (1) executable `lzw16`; (2) static  library  `liblzw16.a`
 with three  exported  functions  called Compress, Compress2  and Decompress (see
 export.h) and  (3)  test  program `lzw_test`  statically  linked  with the above
 library. 
 
-Type `./lzw10` to see all command line options. 
+Type `./lzw16` to see all command line options. 
 
 Examples: 
 
-`./lzw10 -p sample.txt sample.lzw` (pack sample.txt) 
+`./lzw16 -p sample.txt sample.lzw` (pack sample.txt) 
 
-`./lzw10 -u sample.lzw sample_copy.txt` (unpack sample.lzw) 
+`./lzw16 -u sample.lzw sample_copy.txt` (unpack sample.lzw) 
 
-`./lzw10 -tv sample.txt` (test compression/decompression, verbose mode) 
+`./lzw16 -tv sample.txt` (test compression/decompression, verbose mode) 
 
-`./lzw10 -large` (test synthetic data) 
+`./lzw16 -large` (test synthetic data) 
 
-`./lzw10 -b14 -large 10` (test synthetic data size 10 x 256 Kb, use max 14-bit) 
+`./lzw16 -b14 -large 10` (test synthetic data size 10 x 256 Kb, use max 14-bit) 
 
-'./lzw10 -pv -b12 sample.txt sample.lzw`  (pack  sample.txt  using  codes  up to
+'./lzw16 -pv -b12 sample.txt sample.lzw`  (pack  sample.txt  using  codes  up to
 12-bit width, verbose) 
 
 </pre> 

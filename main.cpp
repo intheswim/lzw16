@@ -80,10 +80,10 @@ static void show_command (const char* cmd)
 #endif 
 }
 
-static void printSyntax ()
+static void printSyntax (const char *prog)
 {
-  printf ("syntax: lzw10 -(p|u|t) [-v -f -k -t] [-bN] inputFile outputFile \n");
-  printf ("        lzw10 -large [N] \n");
+  printf ("syntax: %s -(p|u|t) [-v -f -k -t] [-bN] inputFile outputFile \n", prog);
+  printf ("        %s -large [N] \n", prog);
   printf ("\t -p - pack \n");
   printf ("\t -u - unpack \n");
   printf ("\t -v - verbose \n");
@@ -372,7 +372,7 @@ int main(int argc, char *argv[])
 
   if (option == PARSE_ERROR)
   {
-    printSyntax ();
+    printSyntax (argv[0]);
     
     return EXIT_FAILURE;
   }
