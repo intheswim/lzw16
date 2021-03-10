@@ -512,7 +512,7 @@ int Compress(const char *filename, const char *outfile, int flags)
     long orig_size = fileSize (filename);
     long compressed_size = fileSize (outfile);
 
-    printf ("Compression ratio %.2f%%\n", 100.0 * compressed_size / orig_size);
+    printf ("Compression ratio %.2f%%\n", 100.0 * (orig_size - compressed_size) / orig_size);
   }
 
   return ret;
@@ -539,7 +539,7 @@ int Compress2 (const char *filename, const char *outfile, int flags, int max_bit
     long orig_size = fileSize (filename);
     long compressed_size = fileSize (outfile);
 
-    printf ("Compression ratio %.2f%%\n", 100.0 * compressed_size / orig_size);
+    printf ("Compression ratio %.2f%%\n", 100.0 * (orig_size - compressed_size) / orig_size);
   }
 
   return ret;
